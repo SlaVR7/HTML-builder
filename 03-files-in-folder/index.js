@@ -1,18 +1,26 @@
-const fs = require('fs'),
-  path = require('path'),
-  prom = fs.promises;
-prom.readdir(path.join(__dirname, 'secret-folder'), {
-  withFileTypes: true
-}).then(res => {
-  res.forEach(output => {
-    if (output.isDirectory() === false) {
-      let filePath = path.join(__dirname, 'secret-folder', output.name),
-        fileName = path.basename(filePath),
-        fileExt = path.extname(filePath);
-      prom.stat(filePath).then(res => {
-        process.stdout.write(fileName.replace(fileExt, '') + ' - ' + fileExt.replace('.', '') + ' - ' + res.size + 'bytes\n');
+const fs = require('fs');
+const path = require('path');
+const folderPath = path.join(__dirname, 'secret-folder');
+
+fs.readdir(folderPath, { withFileTypes: true }, (err, files) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  files.forEach(file => {
+    if (file.isFile()) {
+      const fileName = file.name;
+      const fileExt = path.extname(fileName);
+
+      fs.stat(path.join(folderPath, fileName), (err, stats) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        console.log(`${fileName.replace(fileExt, '')} - ${fileExt.replace('.', '')} - ${stats.size} `);
       });
     }
   });
 });
-
