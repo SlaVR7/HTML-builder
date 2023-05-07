@@ -30,10 +30,7 @@ fs.readdir(stylesDir, (err, files) => {
         fs.writeFile(bundlePath, fileContents, err => {
           if (err) {
             console.error(err);
-            return;
           }
-
-          console.log(`All styles are now bundled in ${bundlePath}`);
         });
       }
     });
