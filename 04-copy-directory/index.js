@@ -1,19 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-function copyDir() {
-
-  fs.readdir(path.join(__dirname, 'files-copy'), (err, files) => {
-    if (err) throw err;
-
-    files.forEach(file => {
-      fs.unlink(path.join(path.join(__dirname, 'files-copy'), file), err => {
-        if (err) throw err;
-      });
-    });
-  });
-
-  fs.mkdir(path.join(__dirname, 'files-copy'), { recursive: true }, error => {
+function create() {
+  fs.mkdir(path.join(__dirname, 'files-copy'), {recursive: true}, error => {
     if (error) {
       throw new Error('error');
     }
@@ -32,6 +21,22 @@ function copyDir() {
         });
       });
     });
+  });
+}
+
+function copyDir() {
+
+  fs.readdir(path.join(__dirname, 'files-copy'), (err, files) => {
+    if (err) {
+      create();
+    } else {
+      files.forEach(file => {
+        fs.unlink(path.join(path.join(__dirname, 'files-copy'), file), err => {
+          if (err) throw err;
+        });
+      });
+      create();
+    }
   });
 }
 

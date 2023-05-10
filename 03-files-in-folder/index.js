@@ -19,7 +19,7 @@ fs.readdir(folderPath, { withFileTypes: true }, (err, files) => {
           return;
         }
 
-        console.log(`${fileName.replace(fileExt, '')} - ${fileExt.replace('.', '')} - ${stats.size} `);
+        console.log(`${fileName.replace(fileExt, '')} - ${fileExt.replace('.', '')} - ${stats.size} bytes`);
       });
     }
   });

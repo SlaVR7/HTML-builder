@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const stylesDir = path.join(__dirname, 'styles');
-const bundlePath = path.join(__dirname, 'bundle.css');
+const bundlePath = path.join(__dirname, 'project-dist/bundle.css');
 
 fs.readdir(stylesDir, (err, files) => {
   if (err) {
